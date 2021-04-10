@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=RocknRoll+One&display=swap');
+
+/* VARIAVEIS */
+$font-stack: Helvetica, sans-serif;
+$primary-color: #1f3c88;
+$primary-dark-color: #070d59;
+$X-color: red;
+$O-color: blue;
+
+$bg-color: #fdfdfd;
+$bg-game-color: #fff;
+
+/* MIXINS */
+@mixin flexbox-row($justify-content: center, $align-items: center) {
+    display: flex;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+@mixin flexbox-column($justify-content: center, $align-items: center) {
+    display: flex;
+    flex-direction: column;
+    justify-content: $justify-content;
+    align-items: $align-items;
+}
+
+@mixin card-shadow {
+    box-shadow: 0 10px 40px -10px rgb(0 64 128 / 20%);
+    transition: box-shadow .3s;
+}
+
+
+//Reset
+html, body, div, span, h1, h2, h3, p, button {
+	margin: 0;
+	padding: 0;
+	border: 0;
+    border-style: none;
+	font: inherit;
+	vertical-align: baseline;
+    font-size: 1em;
+    font-family: $font-stack;
+}
+
+body {
+	line-height: 1;
+}
+
+// ESTILO
+html {
+    width: 100%;
+    height: 100%;
+    background-color: $bg-color;
+    font-size: 16px !important;
+}
+
+#text-game {
+    font-size: 1.4rem;
+
+    &, strong {
+        &::-moz-selection {
+            background: transparent;
+        }
+        
+        &::selection{
+            background: transparent;
+        }
+    }
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+    @include flexbox-column(space-evenly);
+}
+
+.jogo-velha {
+    width: 50vw;
+    height: 55vh;
+    background-color: $bg-game-color;
+    border-radius: 25px;
+    padding: 1rem;
+    @include flexbox-column();
+    @include card-shadow;
+    
+    .row {
+        width: 100%;
+        @include flexbox-row();
+        flex-grow: 1;
+        font-family: 'RocknRoll One', sans-serif;
+        font-weight: 800;
+        font-style: italic;
+
+        .column {
+            height: 100%;
+            border: 2px solid transparent;
+            @include flexbox-row();
+            flex-grow: 1;
+    
+            &:not(:nth-child(3)) {
+                border-right-color: black !important;
+            }
+
+            &::before {
+                content: '';
+                font-size: 0;
+                position: absolute;
+                transition: font-size 0.4s ease-out;
+            }
+
+            &.filled::before {
+                font-size: 5em;
+            }
+
+            &.filled.animate::before {
+                animation: animate-letters 0.5s ease-in-out;
+            }
+
+            &.X::before {
+                content: 'X';
+                color: $X-color;
+            }
+
+            &.O::before {
+                content: 'O';
+                color: $O-color;
+            }
+        }
+
+        &:not(:nth-child(3)) .column {
+            border-bottom-color:black;
+        }
+    }
+}
+
+button {
+    background-color: $primary-color;
+    color: white;
+    padding: 1rem;
+    width: 30%;
+    font-size: 1.2rem;
+    border-radius: 8px;
+    border: 1px solid $primary-dark-color;
+
+    &:hover {
+        background-color: $primary-dark-color;
+    }
+}
+
+// KEYFRAMES
+@keyframes animate-letters {
+    0% {
+        font-size: 5em;
+    }
+    50% {
+        font-size: 6.5em;
+    }
+    100% {
+        font-size: 5em;
+    }
+}
