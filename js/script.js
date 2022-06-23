@@ -11,10 +11,10 @@ function playTurn(event) {
     if (finished) return;
 
     if(!el.classList.contains("filled")){
-        player_label.innerHTML = "Vamos lá! Agora é a vez do jogador "+current_player+"...";
-
         el.classList.add("filled", current_player);
         current_player = (current_player == "X") ? "O" : "X";
+
+        player_label.innerHTML = "Vamos lá! Agora é a vez do jogador " + current_player + "...";
 
         checkWinner();
     }
@@ -22,7 +22,7 @@ function playTurn(event) {
 
 function getMatrizFromTable(){
     let newMatriz = new Array();
-    
+
     rowList.forEach((row, i) => {
         let columns = row.querySelectorAll(".column");
 
